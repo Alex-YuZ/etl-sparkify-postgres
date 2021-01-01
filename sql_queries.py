@@ -79,7 +79,7 @@ INSERT INTO users (user_id,
                     level) 
                     VALUES (%s, %s, %s, %s, %s)
                     ON CONFLICT (user_id) 
-                    DO NOTHING
+                    DO UPDATE SET level = EXCLUDED.level
 """)
 
 song_table_insert = ("""
