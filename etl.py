@@ -6,18 +6,7 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
-    """
-    Open song file.
-    
-    Parameters:
-        cur: the cursor object
-        filepath: where the song json file lives
-        
-    Returns:
-        None
-    """
-    
-    # read the json file into DataFrame
+    # open song file
     df = pd.read_json(filepath, lines=True)
 
     # insert song record
@@ -32,18 +21,7 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
-    """
-    Open log file.
-    
-    Parameters:
-        cur: the cursor object
-        filepath: where the event log json file lives
-
-    Returns:
-        None
-    """
-    
-    # read the json file into a DataFrame
+    # open log file
     df = pd.read_json(filepath, lines=True)
 
     # filter by NextSong action
@@ -85,19 +63,6 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
-    """
-    Get all files matching extension from directory
-    
-    Parameters:
-        cur: the cursor object
-        conn: the object of connection to db 
-        filepath: where the event log json file lives
-        func: the type of function (process_song_file, process_log_file) used to process data. 
-
-    Returns:
-        None
-    
-    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -117,15 +82,6 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
-    """
-    Packages all the functions defined above. 
-    Connect to the database and acquire the cursor.
-    Close the connection to the database.
-    
-    Parameters: None
-    Returns: None
-    
-    """
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
